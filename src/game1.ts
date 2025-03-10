@@ -2,7 +2,7 @@ import * as readline from 'readline';
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 
 function askQuestion(query: string): Promise<string> {
@@ -14,12 +14,14 @@ function askQuestion(query: string): Promise<string> {
 }
 
 function gcd(a: number, b: number): number {
-  while (b !== 0) {
-    const temp = b;
-    b = a % b;
-    a = temp;
+  let x = a;
+  let y = b;
+  while (y !== 0) {
+    const temp = y;
+    y = x % y;
+    x = temp;
   }
-  return a;
+  return x;
 }
 
 function lcm(a: number, b: number): number {
@@ -42,14 +44,17 @@ async function main() {
     const num2 = Math.floor(Math.random() * 100) + 1;
     const num3 = Math.floor(Math.random() * 100) + 1;
     const question = `Question: ${num1} ${num2} ${num3}\nYour answer: `;
+    // eslint-disable-next-line no-await-in-loop
     const userAnswer = await askQuestion(question);
     const correctAnswer = calculateLCM(num1, num2, num3).toString();
 
     if (userAnswer === correctAnswer) {
       console.log('Correct!');
-      correctAnswers++;
+      correctAnswers += 1;
     } else {
-      console.log(`'${userAnswer}' is wrong answer ;(. Correct answer was '${correctAnswer}'.`);
+      console.log(
+        `'${userAnswer}' is wrong answer ;(. Correct answer was '${correctAnswer}'.`,
+      );
       console.log(`Let's try again, ${name}!`);
       break;
     }
