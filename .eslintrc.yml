@@ -2,11 +2,48 @@ parser: "@typescript-eslint/parser"
 parserOptions:
   ecmaVersion: 2020
   sourceType: module
+  project: ./tsconfig.json # Для правил TypeScript
 extends:
-  - airbnb-base
-  - plugin:@typescript-eslint/recommended
+  - standard-with-typescript # Базовые правила для TypeScript
+  - prettier # Интеграция с Prettier
 plugins:
-  - "@typescript-eslint"
+  - "@typescript-eslint" # Поддержка TypeScript
+ignorePatterns:
+  - node_modules # Игнорируем node_modules
+  - dist # Игнорируем скомпилированные файлы
+  - "*.config.js" # Игнорируем конфигурационные файлы
 rules:
-  no-console: off
-  import/extensions: off
+  no-console: warn # Разрешить console.log для CLI
+  import/extensions: off # Разрешить импорт без расширений
+  # Настройки порядка импорта
+  "import/order":
+    - error
+    - groups:
+        - ["builtin", "external"] # Базовые и внешние модули
+        - "internal" # Внутренние модули
+        - ["sibling", "parent"] # Импорты из соседних и родительских файлов
+        - "index" # Импорт из index файлов
+      alphabetize:
+        order: "asc" # Сортировать по алфавиту
+        caseInsensitive: true # Игнорировать регистр
+  # Обеспечение единообразных типов
+  "@typescript-eslint/consistent-type-definitions":
+    - error
+    - "type"
+  # Отключение избыточно строгих правил для CLI
+  "@typescript-eslint/strict-boolean-expressions": off
+  "@typescript-eslint/prefer-nullish-coalescing": off
+  "@typescript-eslint/explicit-function-return-type": off
+  "@typescript-eslint/restrict-template-expressions": off
+  "@typescript-eslint/triple-slash-reference": off
+  "@typescript-eslint/ban-types": off
+  "@typescript-eslint/consistent-type-assertions": off
+  # Обязательные фигурные скобки
+  curly:
+    - error
+    - all
+  # Запрет неровных пробелов
+  no-irregular-whitespace:
+    - error
+    - skipTemplates: true
+      skipStrings: true
