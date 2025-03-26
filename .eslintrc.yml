@@ -1,4 +1,4 @@
-parser: "@typescript-eslint/parser"
+parser: "@typescript-eslint/parser" # Указывает ESLint использовать парсер для TypeScript, чтобы он мог анализировать синтаксис TypeScript, а не только JavaScript.
 parserOptions:
   ecmaVersion: 2020
   sourceType: module
